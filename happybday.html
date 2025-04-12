@@ -1,0 +1,136 @@
+<html> 
+<link rel="stylesheet" href="hbd.css">
+<div class="flipbook centered" id="flipbook">
+	<div class="leaf">
+		<div class="page front title external" style="background-color:#0273c4;">
+			<img src="https://media.tenor.com/3iR2j24pmNYAAAAM/funny-cat.gif" alt="Funny Cat" width="168" height="270" >
+		</div>
+		<div class="page back" style="background-color:#2a9d8f;">
+			<div class="pageNumber"></div>
+		</div>
+	</div>
+	<div class="leaf">
+		<div class="page front" style="background-color:#2a9d8f;">
+			<div class="pageNumber"></div>
+			<h2>It's your special day today, baby:)</h2>
+      <p> Happy birthday! 🎉  I have so many things to tell you gamit itong coding nato hehe</p>
+			<div class="contents-row">
+			</div>
+			<div class="contents-row">
+			</div>
+		</div>
+		<div class="page back" style="background-color:#e9c46a;">
+			<div class="pageNumber"></div>
+			
+			<h2>Sorry kung maikli</h2>
+			<p>  I thank God for letting us meet. sobrang grateful ko na dumating ka sa buhay ko. Alam mo bebe, kung magkaroon ka man ng second thoughts kung mahal ba talaga kita, YES. I really do love you. </p>
+		</div>
+	</div>
+	<div class="leaf">
+		<div class="page front"  style="background-color:#e9c46a;">
+			<div class="pageNumber"></div>
+			<p> At hindi ko lang basta sinasabi, I show it through my actions po. Like, being consistent, telling you how much I love you, and giving you compliments. Kasi, you deserve to be loved in a way na gusto mo at yung alam kong makakapagpasaya sayo.</p>
+		</div>
+		<div class="page back"  style="background-color:#f4a261;">
+			<div class="pageNumber"></div>
+			<h2>Enjoy your day:)</h2>
+			<p>
+				remember, kung di man sila satisfied sa average mo, nandito ako, okay? I'm proud of you, always. You worked hard and that’s what matters, okay? wag kang malungkot today ha>:( kasi, it's your special day!
+			</p>
+		</div>
+	</div>
+	<div class="leaf">
+		<div class="page front" style="background-color:#f4a261;">
+			<div class="pageNumber"></div>
+			<p>
+				I promise, I'll do everything to make you happy, kasi I love seeing you smile, baby ko:) so cute kaya mag smile niyan
+			</p>
+			
+			<h2> <em> Bago mag end </em> </h2>
+			<button onclick="window.location.href='file:///C:/Users/Administrator/Documents/willyoubemy.html'"> click this </button>
+		</div>
+		<div class="page back external" style="background-color:#0273c4;">
+		</div>
+	</div>
+</div>
+<div class="controls centered">
+	<button id="prevPage">&lt; Previous</button>
+	<button id="nextPage">Next &gt;</button>
+</div>
+
+<script>
+  class FlipBook {
+    constructor(bookElem) {
+      this.elems = {
+        book: bookElem,
+        leaves: bookElem.querySelectorAll(".leaf"),
+        buttons: {
+          next: document.getElementById("nextPage"),
+          prev: document.getElementById("prevPage")
+        }
+      };
+      this.setupEvents();
+      this.currentPagePosition = 0;
+      this.turnPage(0);
+    }
+
+    setPagePosition(page, position, index) {
+      var transform = "";
+      transform = "translate3d(0,0," + ((position < 0 ? 1 : -1) * Math.abs(index)) + "px)";
+      if (position < 0) {
+        transform += " rotate3d(0,1,0,-180deg)";
+        page.classList.add("turned");
+      } else {
+        page.classList.remove("turned");
+      }
+
+      if (page.style.transform !== transform) {
+        page.style.transform = transform;
+      }
+    }
+
+    turnPage(delta) {
+      this.currentPagePosition += delta;
+
+      if (this.currentPagePosition < 0) {
+        this.currentPagePosition = 0;
+        return;
+      }
+
+      if (this.currentPagePosition > this.elems.leaves.length) {
+        this.currentPagePosition = this.elems.leaves.length;
+        return;
+      }
+
+      this.elems.leaves.forEach((page, index) => {
+        var pageNumber = index;
+        this.setPagePosition(page, pageNumber - this.currentPagePosition, index);
+      });
+
+    
+      if (this.currentPagePosition === 0) {
+        this.elems.buttons.prev.setAttribute("disabled", "disabled");
+      } else if (this.currentPagePosition === this.elems.leaves.length) {
+        this.elems.buttons.next.setAttribute("disabled", "disabled");
+      } else {
+        this.elems.buttons.next.removeAttribute("disabled");
+        this.elems.buttons.prev.removeAttribute("disabled");
+      }
+    }
+
+    setupEvents() {
+      this.elems.buttons.next.addEventListener("click", () => {
+        this.turnPage(1);
+      });
+
+      this.elems.buttons.prev.addEventListener("click", () => {
+        this.turnPage(-1);
+      });
+    }
+  }
+
+  // Initialize the FlipBook
+  document.addEventListener("DOMContentLoaded", () => {
+    const flipBook = new FlipBook(document.getElementById("flipbook"));
+  });
+</script>
